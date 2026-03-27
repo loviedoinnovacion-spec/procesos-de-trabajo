@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EAPT 2026 — Unidad I: Introducción al estudio del proceso de trabajo</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #1a3a5c;
+    --azul-medio: #2d6a9f;
+    --azul-claro: #ddeeff;
+    --acento: #e05a1e;
+    --acento-claro: #fdf0e8;
+    --texto: #1e1e1e;
+    --texto-suave: #4a4a4a;
+    --texto-tenue: #7a7a7a;
+    --fondo: #f7f5f0;
+    --fondo-card: #ffffff;
+    --borde: #e0ddd6;
+    --verde: #1d6e4e;
+    --verde-claro: #e8f5ee;
+    --rosa: #8b2252;
+    --rosa-claro: #f5e8ef;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ── PORTADA ── */
+  .portada {
+    background: var(--azul);
+    color: #fff;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .portada::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .portada::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -60px;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .portada-inner { max-width: 860px; margin: 0 auto; position: relative; }
+  .portada-supra {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 1rem;
+  }
+  .portada h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+    color: #fff;
+  }
+  .portada h1 em {
+    font-style: italic;
+    color: rgba(255,255,255,0.7);
+  }
+  .portada-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .portada-chip {
+    font-size: 12px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.85);
+  }
+  .portada-chip.acento { background: var(--acento); border-color: var(--acento); color: #fff; }
+
+  /* ── LAYOUT ── */
+  .contenedor { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+  /* ── NAVEGACIÓN ── */
+  .nav-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(247,245,240,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--borde);
+    padding: 0;
+  }
+  .nav-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    padding: 14px 18px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--texto-tenue);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    font-weight: 400;
+  }
+  .nav-btn:hover { color: var(--azul-medio); }
+  .nav-btn.activo { color: var(--azul); border-color: var(--acento); font-weight: 500; }
+
+  /* ── SECCIONES ── */
+  .seccion { display: none; animation: fadeIn 0.3s ease; }
+  .seccion.activa { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* ── TIPOGRAFÍA ── */
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--acento);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  h2.titulo-seccion {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+    color: var(--azul);
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+  h3.subtitulo {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--azul);
+    margin-bottom: 0.6rem;
+  }
+  p.cuerpo {
+    font-size: 15px;
+    color: var(--texto-suave);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+
+  /* ── CITA DESTACADA ── */
+  .cita-bloque {
+    border-left: 3px solid var(--acento);
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    background: var(--acento-claro);
+    border-radius: 0 8px 8px 0;
+  }
+  .cita-bloque p { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: var(--azul); font-style: italic; line-height: 1.6; }
+  .cita-bloque .fuente { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--texto-tenue); margin-top: 8px; font-style: normal; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--fondo-card);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    padding: 1.25rem 1.4rem;
+    margin-bottom: 1rem;
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+
+  .card-acento { border-top: 3px solid var(--acento); }
+  .card-azul { border-top: 3px solid var(--azul-medio); }
+  .card-verde { border-top: 3px solid var(--verde); }
+  .card-rosa { border-top: 3px solid var(--rosa); }
+
+  /* ── GRID DE ELEMENTOS ── */
+  .grid-3 { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin: 1.25rem 0; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin: 1.25rem 0; }
+  @media (max-width: 620px) {
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  /* ── ELEMENTO CARD ── */
+  .elemento-card {
+    background: var(--fondo-card);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    padding: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .elemento-card:hover { border-color: var(--azul-medio); }
+  .elemento-card.expandido { border-color: var(--azul); background: var(--azul-claro); }
+  .elemento-card .num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--azul-claro);
+    position: absolute;
+    top: 8px; right: 14px;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .elemento-card.expandido .num { color: rgba(45,106,159,0.3); }
+  .elemento-card .etiqueta { font-size: 10px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--acento); font-weight: 500; margin-bottom: 5px; }
+  .elemento-card .nombre { font-size: 14px; font-weight: 500; color: var(--texto); margin-bottom: 4px; }
+  .elemento-card .desc-corta { font-size: 13px; color: var(--texto-tenue); line-height: 1.5; }
+  .elemento-card .desc-larga { font-size: 13px; color: var(--texto-suave); line-height: 1.6; margin-top: 10px; display: none; border-top: 1px solid rgba(45,106,159,0.2); padding-top: 10px; }
+  .elemento-card.expandido .desc-larga { display: block; }
+
+  /* ── DIMENSIONES ── */
+  .dim-item {
+    display: flex;
+    gap: 14px;
+    padding: 1rem 1.2rem;
+    background: var(--fondo-card);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+    transition: all 0.2s;
+  }
+  .dim-item:hover { border-color: var(--azul-medio); }
+  .dim-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .dim-item .dim-label { font-size: 14px; font-weight: 500; color: var(--texto); margin-bottom: 3px; }
+  .dim-item .dim-desc { font-size: 13px; color: var(--texto-suave); line-height: 1.55; }
+  .dim-item .dim-ej { font-size: 12px; color: var(--texto-tenue); margin-top: 4px; font-style: italic; }
+
+  /* ── CRONOGRAMA ── */
+  .crono-tabla { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .crono-tabla th { text-align: left; padding: 8px 12px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--texto-tenue); font-weight: 500; border-bottom: 2px solid var(--borde); }
+  .crono-tabla td { padding: 10px 12px; border-bottom: 1px solid var(--borde); color: var(--texto-suave); vertical-align: top; }
+  .crono-tabla tr:last-child td { border-bottom: none; }
+  .crono-tabla tr:hover td { background: var(--fondo); }
+  .clase-badge { display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 10px; font-weight: 500; }
+  .badge-azul { background: var(--azul-claro); color: var(--azul); }
+  .badge-naranja { background: var(--acento-claro); color: var(--acento); }
+  .badge-gris { background: #f0ede6; color: #888; }
+
+  /* ── TABS REGULACIÓN ── */
+  .tabs-reg { display: flex; gap: 6px; margin-bottom: 1.25rem; border-bottom: 1px solid var(--borde); padding-bottom: 0; }
+  .tab-reg {
+    font-size: 13px; padding: 7px 14px 9px;
+    cursor: pointer; color: var(--texto-tenue);
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s; font-weight: 400;
+    background: none; border-top: none; border-left: none; border-right: none;
+    font-family: 'DM Sans', sans-serif;
+    margin-bottom: -1px;
+  }
+  .tab-reg.activo { color: var(--azul); border-bottom-color: var(--acento); font-weight: 500; }
+  .tab-reg:hover:not(.activo) { color: var(--azul-medio); }
+  .panel-reg { display: none; }
+  .panel-reg.activo { display: block; }
+
+  /* ── ACTORES ── */
+  .actor-item {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 1rem 1.2rem;
+    background: var(--fondo-card);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .actor-icon {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .actor-item .actor-nombre { font-size: 14px; font-weight: 500; color: var(--texto); margin-bottom: 3px; }
+  .actor-item .actor-desc { font-size: 13px; color: var(--texto-suave); line-height: 1.55; }
+  .actor-item .actor-ej { font-size: 12px; color: var(--texto-tenue); margin-top: 4px; }
+
+  /* ── LISTA NORMATIVA ── */
+  .norm-list { list-style: none; padding: 0; }
+  .norm-list li {
+    padding: 9px 0 9px 1rem;
+    border-bottom: 1px solid var(--borde);
+    font-size: 14px;
+    color: var(--texto-suave);
+    line-height: 1.55;
+    position: relative;
+  }
+  .norm-list li::before {
+    content: '';
+    width: 5px; height: 5px;
+    background: var(--acento);
+    border-radius: 50%;
+    position: absolute; left: 0; top: 17px;
+  }
+  .norm-list li:last-child { border-bottom: none; }
+  .norm-list strong { color: var(--texto); font-weight: 500; }
+
+  /* ── TP ── */
+  .paso {
+    display: flex; gap: 14px; margin-bottom: 1rem; align-items: flex-start;
+  }
+  .paso-num {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--azul); color: #fff;
+    font-size: 13px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .paso-contenido .paso-titulo { font-size: 14px; font-weight: 500; color: var(--texto); margin-bottom: 3px; }
+  .paso-contenido p { font-size: 13px; color: var(--texto-suave); line-height: 1.55; }
+
+  /* ── CHECKLIST ── */
+  .checklist-item {
+    display: flex; gap: 12px; align-items: center;
+    padding: 9px 0; border-bottom: 1px solid var(--borde);
+    font-size: 14px; color: var(--texto-suave);
+    cursor: pointer; user-select: none;
+    transition: color 0.15s;
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .chk-box {
+    width: 20px; height: 20px;
+    border: 1.5px solid var(--borde);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    font-size: 12px; color: transparent;
+  }
+  .checklist-item.hecho .chk-box { background: var(--verde); border-color: var(--verde); color: #fff; }
+  .checklist-item.hecho .chk-texto { text-decoration: line-through; color: var(--texto-tenue); }
+
+  /* ── BIBLIO ── */
+  .bib-item {
+    padding: 1rem 1.2rem;
+    background: var(--fondo-card);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  .bib-autor { font-size: 13px; font-weight: 500; color: var(--azul-medio); margin-bottom: 3px; }
+  .bib-titulo { font-size: 14px; color: var(--texto); margin-bottom: 3px; line-height: 1.4; }
+  .bib-datos { font-size: 12px; color: var(--texto-tenue); }
+  .bib-badge {
+    display: inline-block; font-size: 10px;
+    padding: 2px 8px; border-radius: 8px;
+    margin-left: 6px; vertical-align: middle;
+  }
+  .badge-basica { background: var(--verde-claro); color: var(--verde); }
+  .badge-comp { background: var(--fondo); color: var(--texto-tenue); border: 1px solid var(--borde); }
+
+  /* ── REFLEXIÓN ── */
+  .reflexion {
+    background: var(--azul-claro);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .reflexion .ref-titulo { font-size: 12px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--azul-medio); font-weight: 500; margin-bottom: 8px; }
+  .reflexion p { font-size: 14px; color: var(--azul); line-height: 1.7; }
+
+  /* ── NOTA AL PIE ── */
+  .nota { font-size: 12px; color: var(--texto-tenue); border-top: 1px solid var(--borde); margin-top: 2rem; padding-top: 1rem; line-height: 1.6; }
+
+  /* ── SEPARADOR ── */
+  .sep { border: none; border-top: 1px solid var(--borde); margin: 1.75rem 0; }
+
+  /* ── BARRA DE PROGRESO ── */
+  .barra-progreso { height: 3px; background: var(--borde); border-radius: 2px; margin-bottom: 2rem; }
+  .barra-fill { height: 100%; background: var(--acento); border-radius: 2px; transition: width 0.4s; }
+
+  /* ── PRINT ── */
+  @media print {
+    .nav-sticky { display: none; }
+    .seccion { display: block !important; page-break-before: always; }
+    .seccion:first-of-type { page-break-before: avoid; }
+    .portada { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  /* ── PIE ── */
+  .pie {
+    background: var(--azul);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    font-size: 12px;
+    padding: 1.25rem;
+    margin-top: 3rem;
+  }
+  .pie strong { color: rgba(255,255,255,0.8); }
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="portada">
+  <div class="portada-inner">
+    <div class="portada-supra">UTN · Facultad Regional Resistencia · Ingeniería Química · 2026</div>
+    <h1>Unidad I<br><em>Introducción al estudio<br>del proceso de trabajo</em></h1>
+    <div class="portada-meta">
+      <span class="portada-chip">16 hs. cátedra</span>
+      <span class="portada-chip">Clases 1 a 4</span>
+      <span class="portada-chip">Marzo–Abril 2026</span>
+      <span class="portada-chip acento">TP 1</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAVEGACIÓN -->
+<nav class="nav-sticky">
+  <div class="nav-inner">
+    <button class="nav-btn activo" onclick="irA(0)">Introducción</button>
+    <button class="nav-btn" onclick="irA(1)">Proceso de trabajo</button>
+    <button class="nav-btn" onclick="irA(2)">Relaciones de empleo</button>
+    <button class="nav-btn" onclick="irA(3)">Regulación en Argentina</button>
+    <button class="nav-btn" onclick="irA(4)">TP 1 y bibliografía</button>
+  </div>
+</nav>
+
+<!-- CONTENIDO -->
+<div class="contenedor">
+  <div class="barra-progreso"><div class="barra-fill" id="barra" style="width:0%"></div></div>
+
+  <!-- ══════════════════════════════ SECCIÓN 0: INTRODUCCIÓN -->
+  <div class="seccion activa" id="s0">
+
+    <div class="eyebrow">¿Qué estudia esta unidad?</div>
+    <h2 class="titulo-seccion">¿De qué hablamos cuando hablamos de trabajo?</h2>
+
+    <div class="cita-bloque">
+      <p>"El proceso de trabajo se materializa empíricamente de distintas formas, pero en todas ellas se entrelazan actores sociales, tecnologías y regulaciones."</p>
+      <div class="fuente">Fundamentación de la asignatura — EAPT 2026</div>
+    </div>
+
+    <p class="cuerpo">Esta unidad establece los conceptos fundamentales de la asignatura. El trabajo no es una actividad técnica neutra: involucra relaciones sociales, condiciones históricas y marcos normativos. Para analizar cualquier proceso productivo es necesario saber leer estas dimensiones de manera integrada.</p>
+
+    <p class="cuerpo">La asignatura se inscribe en la perspectiva de las <strong>Ciencias Sociales del Trabajo</strong>, una corriente que aborda el trabajo no solo como técnica productiva sino como hecho social total, donde se cruzan poder, identidad, regulación y tecnología.</p>
+
+    <hr class="sep">
+
+    <div class="eyebrow">Tres ejes que articulan la unidad</div>
+    <div class="grid-3">
+
+      <div class="elemento-card" onclick="toggleElemento(this)">
+        <div class="num">1</div>
+        <div class="etiqueta">Eje conceptual</div>
+        <div class="nombre">Proceso de trabajo</div>
+        <div class="desc-corta">Qué se hace, cómo y con qué medios</div>
+        <div class="desc-larga">El proceso de trabajo es la unidad básica de análisis: la actividad humana orientada a transformar objetos mediante medios de producción. Incluye dimensiones técnicas y sociales inseparables. No hay proceso de trabajo "puro": siempre está mediado por relaciones de poder y regulaciones.</div>
+      </div>
+
+      <div class="elemento-card" onclick="toggleElemento(this)">
+        <div class="num">2</div>
+        <div class="etiqueta">Eje relacional</div>
+        <div class="nombre">Relaciones de empleo</div>
+        <div class="desc-corta">Quién manda, quién trabaja, cómo se acuerda</div>
+        <div class="desc-larga">Las relaciones de empleo enmarcan el proceso de trabajo: contrato, subordinación, negociación colectiva. Lo micro (la tarea concreta) está siempre inscripto en lo macro (el mercado de trabajo, el sistema productivo nacional e internacional).</div>
+      </div>
+
+      <div class="elemento-card" onclick="toggleElemento(this)">
+        <div class="num">3</div>
+        <div class="etiqueta">Eje normativo</div>
+        <div class="nombre">Regulación</div>
+        <div class="desc-corta">Leyes, convenios y estatutos en Argentina</div>
+        <div class="desc-larga">El proceso de trabajo en Argentina está regulado por un sistema normativo complejo: la Ley de Contrato de Trabajo, convenios colectivos sectoriales y estatutos profesionales. El/la ingeniero/a opera dentro de este marco, lo conozca o no.</div>
+      </div>
+
+    </div>
+    <p style="font-size:12px;color:var(--texto-tenue);">Hacé clic en cada eje para ampliar</p>
+
+    <hr class="sep">
+
+    <div class="eyebrow">Cronograma de la Unidad I</div>
+    <div class="card">
+      <table class="crono-tabla">
+        <thead>
+          <tr>
+            <th>Clase</th>
+            <th>Fecha</th>
+            <th>Contenido</th>
+            <th>Actividad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="clase-badge badge-azul">Clase 1</span></td>
+            <td>20 de marzo</td>
+            <td>Concepto y elementos del proceso de trabajo</td>
+            <td>Inicio TP 1</td>
+          </tr>
+          <tr>
+            <td><span class="clase-badge badge-azul">Clase 2</span></td>
+            <td>27 de marzo</td>
+            <td>Relaciones de empleo — dimensiones micro y macro</td>
+            <td>Continuación TP 1</td>
+          </tr>
+          <tr>
+            <td><span class="clase-badge badge-gris">—</span></td>
+            <td>3 de abril</td>
+            <td style="color:var(--texto-tenue);font-style:italic;">⚠ Feriado: Viernes Santo — sin clase</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><span class="clase-badge badge-azul">Clase 3</span></td>
+            <td>10 de abril</td>
+            <td>Regulación en Argentina: LCT, CCT y estatutos</td>
+            <td>Trabajo de campo TP 1</td>
+          </tr>
+          <tr>
+            <td><span class="clase-badge badge-naranja">Clase 4</span></td>
+            <td>17 de abril</td>
+            <td>Cierre Unidad I</td>
+            <td>Informe y exposición TP 1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════ SECCIÓN 1: PROCESO DE TRABAJO -->
+  <div class="seccion" id="s1">
+
+    <div class="eyebrow">Contenido central — Clases 1 y 2</div>
+    <h2 class="titulo-seccion">Concepto y elementos del proceso de trabajo</h2>
+
+    <p class="cuerpo">El proceso de trabajo es la forma concreta en que la actividad humana se organiza para producir bienes o servicios. La tradición marxista ofrece una definición que sigue siendo la base del análisis contemporáneo en las Ciencias Sociales del Trabajo: todo proceso de trabajo combina tres elementos constitutivos.</p>
+
+    <div class="eyebrow">Los tres elementos según Marx</div>
+    <div class="grid-3">
+
+      <div class="elemento-card" onclick="toggleElemento(this)">
+        <div class="num">I</div>
+        <div class="etiqueta">Elemento 1</div>
+        <div class="nombre">La actividad misma — el trabajo</div>
+        <div class="desc-corta">La fuerza de trabajo puesta en movimiento</div>
+        <div class="desc-larga">No es solo esfuerzo físico: incluye saberes, habilidades, criterios de decisión, experiencia acumulada y creatividad. El trabajo concreto del operario, del técnico, del/la ingeniero/a. Lo que los manuales no pueden capturar completamente: el saber-hacer tácito que sostiene cualquier proceso productivo.</div>
+      </div>
+
+      <div class="elemento-card" onclick="toggleElemento(this)">
+        <div class="num">II</div>
+        <div class="etiqueta">Elemento 2</div>
+        <div class="nombre">El objeto de trabajo</div>
+        <div class="desc-corta">Aquello sobre lo que actúa el trabajo</div>
+        <div class="desc-larga">Materias primas, insumos, datos, pacientes, estudiantes. Puede ser natural (mineral, algodón) o ya procesado (acero, código fuente). El objeto de trabajo determina en parte las condiciones del proceso: no es lo mismo transformar un producto biológico que uno sintético, o brindar un servicio que fabricar un bien tangible.</div>
+      </div>
+
+      <div class="elemento-card" onclick="toggleElemento(this)">
+        <div class="num">III</div>
+        <div class="etiqueta">Elemento 3</div>
+        <div class="nombre">Los medios de trabajo</div>
+        <div class="desc-corta">Herramientas, máquinas, tecnologías de gestión</div>
+        <div class="desc-larga">No son neutros: cada tecnología incorpora una lógica de organización del trabajo (quién controla, qué se automatiza, qué queda a discreción del trabajador/a). Las <em>tecnologías de gestión</em> (TG) —software de control, sistemas ERP, protocolos de calidad— son también medios de trabajo que estructuran la actividad y el poder en la organización.</div>
+      </div>
+
+    </div>
+    <p style="font-size:12px;color:var(--texto-tenue);margin-bottom:1.75rem;">Hacé clic en cada elemento para ampliar</p>
+
+    <hr class="sep">
+
+    <div class="eyebrow">Cuatro dimensiones de análisis</div>
+    <p class="cuerpo">El proceso de trabajo no puede ser analizado solo desde su dimensión técnica. Las Ciencias Sociales del Trabajo identifican al menos cuatro dimensiones que deben abordarse de manera integrada:</p>
+
+    <div class="dim-item">
+      <div class="dim-dot" style="background:#2d6a9f;"></div>
+      <div>
+        <div class="dim-label">Dimensión técnica</div>
+        <div class="dim-desc">Cómo se organiza la producción: secuencias, tiempos, tecnologías, división de tareas, flujos de materiales e información. Es el objeto tradicional de la ingeniería, pero —por sí sola— no explica el funcionamiento real del proceso.</div>
+        <div class="dim-ej">Ejemplo: diagrama de flujo de una planta química, especificaciones de operación, tiempos de ciclo.</div>
+      </div>
+    </div>
+
+    <div class="dim-item">
+      <div class="dim-dot" style="background:#e05a1e;"></div>
+      <div>
+        <div class="dim-label">Dimensión social</div>
+        <div class="dim-desc">Relaciones de poder, división del trabajo, jerarquías, conflicto y cooperación entre actores. Quién toma decisiones, quién ejecuta, quién sabe y quién controla. Esta dimensión no es un "problema de RRHH": es constitutiva del proceso productivo.</div>
+        <div class="dim-ej">Ejemplo: estructura de mando de una planta, conflictos entre turnos, resistencia informal a procedimientos.</div>
+      </div>
+    </div>
+
+    <div class="dim-item">
+      <div class="dim-dot" style="background:#1d6e4e;"></div>
+      <div>
+        <div class="dim-label">Dimensión normativa</div>
+        <div class="dim-desc">Reglas formales e informales que estructuran el proceso: contratos, convenios colectivos, usos y costumbres de la industria, reglamentos internos. Las normas formales coexisten con reglas tácitas que a veces las contradicen y a veces las complementan.</div>
+        <div class="dim-ej">Ejemplo: cláusulas de un convenio colectivo sobre categorías de operarios; acuerdo informal sobre el ritmo de producción aceptable.</div>
+      </div>
+    </div>
+
+    <div class="dim-item">
+      <div class="dim-dot" style="background:#8b2252;"></div>
+      <div>
+        <div class="dim-label">Dimensión subjetiva</div>
+        <div class="dim-desc">La experiencia vivida del trabajo: identidad profesional, sentido del trabajo, carga cognitiva y emocional. Cómo viven las personas su actividad laboral cotidiana, qué les genera satisfacción o sufrimiento. Esta dimensión conecta con el eje III de la asignatura (carga global de trabajo y riesgos psicosociales).</div>
+        <div class="dim-ej">Ejemplo: percepción de autonomía o vigilancia, orgullo profesional, estrés por demandas contradictorias.</div>
+      </div>
+    </div>
+
+    <div class="reflexion">
+      <div class="ref-titulo">Para reflexionar</div>
+      <p>Pensá en una planta industrial que conozcas (o que imagines). ¿Cuáles son sus objetos de trabajo? ¿Sus medios de trabajo? ¿Quién define cómo se organiza el proceso? ¿Qué saberes pone en juego el/la operario/a que un manual de procedimientos no puede capturar completamente?</p>
+    </div>
+
+    <hr class="sep">
+
+    <div class="card card-azul">
+      <h3 class="subtitulo">Concepto clave: Tecnologías de Gestión (TG)</h3>
+      <p class="cuerpo" style="margin-bottom:0;">Son el conjunto de instrumentos, procedimientos y sistemas destinados a organizar, controlar y optimizar el proceso de trabajo desde la gestión. A diferencia de las tecnologías de proceso (que transforman físicamente el objeto), las TG actúan sobre las relaciones y el comportamiento en el trabajo: sistemas de evaluación de desempeño, software ERP, protocolos de calidad ISO, procedimientos de seguridad, etc. Su análisis es central en la Unidad II.</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════ SECCIÓN 2: RELACIONES DE EMPLEO -->
+  <div class="seccion" id="s2">
+
+    <div class="eyebrow">Articulación micro–macro — Clase 2</div>
+    <h2 class="titulo-seccion">Relaciones de empleo y procesos de trabajo</h2>
+
+    <p class="cuerpo">El proceso de trabajo no existe en el vacío: siempre está inscripto en una relación de empleo. Esta relación articula dos niveles que deben analizarse conjuntamente para comprender cómo se organiza el trabajo en una sociedad.</p>
+
+    <div class="eyebrow">Nivel micro y nivel macro: distinción clave</div>
+    <div class="grid-2">
+      <div class="card card-azul">
+        <h3 class="subtitulo">Nivel microsocial</h3>
+        <p style="font-size:14px;color:var(--texto-suave);line-height:1.65;margin-bottom:8px;">La empresa, el taller, la oficina. Las relaciones concretas entre jefes y subordinados, la organización cotidiana del trabajo, la negociación informal de reglas dentro del espacio productivo.</p>
+        <p style="font-size:13px;color:var(--texto-tenue);font-style:italic;">Ejemplos: acuerdos de empresa, reglamentos internos, estructura jerárquica de una planta, negociación cotidiana de ritmos y descansos.</p>
+      </div>
+      <div class="card card-acento">
+        <h3 class="subtitulo">Nivel macrosocial</h3>
+        <p style="font-size:14px;color:var(--texto-suave);line-height:1.65;margin-bottom:8px;">El mercado de trabajo, el sistema de relaciones laborales, las políticas de empleo. El contexto estructural en el que la empresa opera y dentro del cual toma sus decisiones productivas y organizativas.</p>
+        <p style="font-size:13px;color:var(--texto-tenue);font-style:italic;">Ejemplos: tasas de desempleo sectorial, poder sindical en la rama, reformas laborales, modelos de desarrollo nacional.</p>
+      </div>
+    </div>
+
+    <p class="cuerpo">La articulación entre estos dos niveles es uno de los problemas centrales de las Ciencias Sociales del Trabajo: lo que ocurre en una planta específica no puede explicarse sin considerar el contexto estructural, y viceversa.</p>
+
+    <hr class="sep">
+
+    <div class="eyebrow">Los actores del sistema de relaciones de trabajo</div>
+    <p class="cuerpo">El sistema de relaciones laborales en Argentina —como en la mayoría de las economías capitalistas— se estructura en torno a tres actores principales que negocian, disputan y acuerdan las condiciones en que se desarrolla el trabajo:</p>
+
+    <div class="actor-item">
+      <div class="actor-icon" style="background:#ddeeff;">💼</div>
+      <div>
+        <div class="actor-nombre">Capital / Empleadores</div>
+        <div class="actor-desc">Organizados en cámaras empresariales (por ejemplo, COPAL en alimentos, CIQYP en industria química). Buscan maximizar productividad, reducir costos y obtener flexibilidad organizativa. Tienen poder de organizar el proceso productivo dentro de los límites que fijan la ley y los convenios.</div>
+        <div class="actor-ej">Cámara de la Industria Química y Petroquímica (CIQyP), ADIMRA, UIA.</div>
+      </div>
+    </div>
+
+    <div class="actor-item">
+      <div class="actor-icon" style="background:#fdf0e8;">✊</div>
+      <div>
+        <div class="actor-nombre">Trabajadores / Sindicatos</div>
+        <div class="actor-desc">El movimiento obrero organizado negocia condiciones de trabajo, salarios y jornada. En Argentina, el modelo sindical por actividad (un sindicato por rama) le da gran poder a los sindicatos nacionales únicos. La CGT y la CTA son las dos centrales sindicales principales.</div>
+        <div class="actor-ej">Sindicato de Petroquímicos (SITRAPE), UOM (metalúrgicos), APLA (pilotos), FAECYS (comercio).</div>
+      </div>
+    </div>
+
+    <div class="actor-item">
+      <div class="actor-icon" style="background:#e8f5ee;">⚖️</div>
+      <div>
+        <div class="actor-nombre">Estado</div>
+        <div class="actor-desc">Regula las relaciones laborales mediante legislación, ministerios y la justicia laboral. En Argentina: el Ministerio de Trabajo, Empleo y Seguridad Social (MTEySS) homologa convenios colectivos y media en conflictos. El Estado también actúa como empleador directo de una fracción significativa de la fuerza de trabajo.</div>
+        <div class="actor-ej">MTEySS, INDEC (estadísticas laborales), AFIP, Justicia del Trabajo.</div>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="card card-verde">
+      <h3 class="subtitulo">Concepto clave: Conflicto y cooperación en la relación laboral</h3>
+      <p style="font-size:14px;color:var(--texto-suave);line-height:1.65;">La relación laboral bajo el capitalismo es estructuralmente asimétrica: el trabajador/a vende su fuerza de trabajo al empleador. Esta asimetría genera tanto cooperación (para producir) como conflicto (por la distribución de los resultados y las condiciones en que se trabaja). Las Ciencias Sociales del Trabajo estudian ambas dimensiones sin reducir el análisis a una sola de ellas.</p>
+    </div>
+
+    <div class="reflexion">
+      <div class="ref-titulo">Para reflexionar</div>
+      <p>¿Qué convenio colectivo regula la actividad en una planta de producción química de tu región? ¿Quiénes son los actores sindicales y empresariales de esa negociación? ¿Cómo inciden las condiciones macroeconómicas (inflación, desempleo sectorial) en las negociaciones salariales de esa rama?</p>
+    </div>
+
+    <hr class="sep">
+    <p style="font-size:13px;color:var(--texto-tenue);">Referencia de lectura: Ceballos Acasuso, M. (2018). <em>Análisis del trabajo como fenómeno multidimensional.</em> Documento de Cátedra N° 1 UTN.</p>
+
+  </div>
+
+  <!-- ══════════════════════════════ SECCIÓN 3: REGULACIÓN -->
+  <div class="seccion" id="s3">
+
+    <div class="eyebrow">Marco normativo argentino — Clase 3</div>
+    <h2 class="titulo-seccion">Regulación de los procesos de trabajo en Argentina</h2>
+
+    <p class="cuerpo">En Argentina, el proceso de trabajo está regulado por un sistema normativo en capas. Como futuro/a ingeniero/a, vas a tomar decisiones que afectan a trabajadores/as: conocer este marco es una responsabilidad ética y profesional, no solo jurídica.</p>
+
+    <div class="card" style="margin-bottom:1.5rem;">
+      <h3 class="subtitulo">El principio de orden público laboral — la pirámide normativa</h3>
+      <p style="font-size:14px;color:var(--texto-suave);line-height:1.65;margin-bottom:8px;">Las normas laborales establecen <strong>pisos mínimos</strong>. Ningún acuerdo individual o colectivo puede estar por debajo de la ley. Los convenios colectivos pueden mejorar esos pisos, pero nunca reducirlos. Este principio se conoce como <em>in dubio pro operario</em>: en caso de duda, se aplica la norma más favorable al trabajador/a.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+        <span style="font-size:12px;padding:4px 12px;border-radius:20px;background:var(--azul-claro);color:var(--azul);">Constitución Nacional</span>
+        <span style="font-size:12px;color:var(--texto-tenue);align-self:center;">→</span>
+        <span style="font-size:12px;padding:4px 12px;border-radius:20px;background:var(--azul-claro);color:var(--azul);">LCT</span>
+        <span style="font-size:12px;color:var(--texto-tenue);align-self:center;">→</span>
+        <span style="font-size:12px;padding:4px 12px;border-radius:20px;background:var(--azul-claro);color:var(--azul);">Convenio Colectivo</span>
+        <span style="font-size:12px;color:var(--texto-tenue);align-self:center;">→</span>
+        <span style="font-size:12px;padding:4px 12px;border-radius:20px;background:var(--azul-claro);color:var(--azul);">Contrato Individual</span>
+      </div>
+    </div>
+
+    <div class="tabs-reg">
+      <button class="tab-reg activo" onclick="irRegTab(0)">LCT</button>
+      <button class="tab-reg" onclick="irRegTab(1)">Convenios colectivos</button>
+      <button class="tab-reg" onclick="irRegTab(2)">Estatutos</button>
+    </div>
+
+    <!-- LCT -->
+    <div class="panel-reg activo" id="rt0">
+      <div class="card card-azul">
+        <h3 class="subtitulo">Ley de Contrato de Trabajo — LCT (Ley 20.744 y modificatorias)</h3>
+        <p style="font-size:14px;color:var(--texto-suave);line-height:1.65;margin-bottom:12px;">Es la norma general que rige las relaciones laborales privadas en Argentina. Establece los derechos y obligaciones básicos de empleadores y trabajadores. No regula el empleo público (que tiene su propio estatuto).</p>
+        <ul class="norm-list">
+          <li><strong>Jornada máxima:</strong> 8 horas diarias / 48 horas semanales. Trabajo nocturno e insalubre tienen jornadas reducidas.</li>
+          <li><strong>Descanso:</strong> mínimo 35 horas continuas semanales, preferentemente desde el sábado a las 13 hs.</li>
+          <li><strong>Vacaciones anuales:</strong> de 14 a 35 días según antigüedad.</li>
+          <li><strong>Aguinaldo (SAC):</strong> salario anual complementario equivalente a la doceava parte de las remuneraciones percibidas.</li>
+          <li><strong>Protección contra el despido arbitrario:</strong> indemnización de un mes de sueldo por año de antigüedad.</li>
+          <li><strong>Licencias especiales:</strong> matrimonio, nacimiento, fallecimiento de familiar, etc.</li>
+          <li><strong>Protección de la maternidad y lactancia.</strong></li>
+          <li><strong>Principio de no discriminación</strong> en el acceso al empleo y durante la relación laboral.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="subtitulo">El principio protectorio</h3>
+        <p style="font-size:14px;color:var(--texto-suave);line-height:1.65;">La LCT reconoce la desigualdad estructural entre trabajador/a y empleador: quien trabaja necesita el salario para subsistir; quien emplea tiene poder de reemplazar. Por eso el derecho laboral es <em>tuitivo</em>: protege especialmente al trabajador/a. Tres reglas concretan este principio: (1) <em>in dubio pro operario</em>; (2) aplicación de la norma más favorable; (3) conservación del régimen más beneficioso.</p>
+      </div>
+    </div>
+
+    <!-- CCT -->
+    <div class="panel-reg" id="rt1">
+      <div class="card card-acento">
+        <h3 class="subtitulo">Convenios Colectivos de Trabajo (CCT)</h3>
+        <p style="font-size:14px;color:var(--texto-suave);line-height:1.65;margin-bottom:12px;">Son acuerdos negociados entre sindicatos y cámaras empresariales que regulan las condiciones específicas de trabajo en una actividad o empresa. Se aplican a todos los trabajadores de la actividad, estén o no afiliados al sindicato firmante.</p>
+        <ul class="norm-list">
+          <li><strong>Homologación:</strong> el MTEySS debe aprobar el CCT para que tenga vigencia. Esto da al Estado un rol de control sobre los acuerdos privados.</li>
+          <li><strong>Ámbito de aplicación:</strong> puede ser por actividad (todo el sector), por empresa, o por establecimiento.</li>
+          <li><strong>Contenido típico:</strong> categorías profesionales y escalas salariales, jornadas especiales, condiciones de seguridad e higiene, régimen de licencias adicionales.</li>
+          <li><strong>Ultractiva:</strong> un CCT vencido mantiene su vigencia hasta que se firme uno nuevo, salvo que las partes acuerden otra cosa.</li>
+          <li><strong>Comisiones paritarias:</strong> organismos de seguimiento e interpretación del convenio, integrados por representantes sindicales y empresariales.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="subtitulo">Relevancia para la ingeniería química</h3>
+        <p style="font-size:14px;color:var(--texto-suave);line-height:1.65;">En la industria química y petroquímica operan distintos convenios según el proceso y la actividad. El/la ingeniero/a puede ser parte del plantel directivo (fuera del CCT, regido por la LCT o un contrato individual) o puede integrar categorías técnicas cubiertas por el convenio. En ambos casos, el conocimiento del convenio aplicable es esencial para la gestión del personal y para no incurrir en infracciones laborales.</p>
+      </div>
+    </div>
+
+    <!-- ESTATUTOS -->
+    <div class="panel-reg" id="rt2">
+      <div class="card card-verde">
+        <h3 class="subtitulo">Estatutos profesionales y especiales</h3>
+        <p style="font-size:14px;color:var(--texto-suave);line-height:1.65;margin-bottom:12px;">Son leyes específicas que regulan la relación de trabajo para determinadas categorías o actividades, con reglas propias que pueden diferir de la LCT. Coexisten con ésta y con los CCT.</p>
+        <ul class="norm-list">
+          <li><strong>Estatuto del Docente (Ley 14.473):</strong> regula estabilidad, escalafón y condiciones del trabajo docente en el sector público nacional.</li>
+          <li><strong>Régimen de trabajo agrario (Ley 26.727):</strong> condiciones específicas para trabajadores/as rurales.</li>
+          <li><strong>Personal de casas particulares (Ley 26.844):</strong> régimen especial para el trabajo doméstico, históricamente excluido de la LCT.</li>
+          <li><strong>Estatuto del Viajante de Comercio (Ley 14.546).</strong></li>
+          <li><strong>Ley de Contrato de Trabajo para el sector público (Ley 25.164).</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3 class="subtitulo">Relación entre estatutos, CCT y LCT</h3>
+        <p style="font-size:14px;color:var(--texto-suave);line-height:1.65;">Los estatutos coexisten con los CCT y la LCT. Se aplica la norma más favorable al trabajador/a en cada aspecto concreto (puede ser la LCT en un aspecto y el estatuto en otro). No existe una jerarquía rígida entre estas normas: el criterio rector es siempre el principio de la norma más beneficiosa.</p>
+      </div>
+      <p style="font-size:13px;color:var(--texto-tenue);margin-top:1rem;">Referencia: Recalde, M. (2017). <em>Manual de Derecho Colectivo de Trabajo.</em> Edunpaz.</p>
+    </div>
+
+    <div class="reflexion" style="margin-top:1.5rem;">
+      <div class="ref-titulo">Para reflexionar</div>
+      <p>Imaginá que sos el/la responsable de producción de una planta de síntesis química en el Gran Resistencia. ¿Qué aspectos del proceso de trabajo estarían regulados por la LCT? ¿Cuáles por el convenio colectivo? ¿Hay algún estatuto especial que aplicaría? ¿Cómo afectaría la normativa de seguridad e higiene a la organización del proceso?</p>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════ SECCIÓN 4: TP Y BIBLIO -->
+  <div class="seccion" id="s4">
+
+    <div class="eyebrow">Evaluación de la Unidad I</div>
+    <h2 class="titulo-seccion">Trabajo Práctico 1 y bibliografía</h2>
+
+    <div class="card card-acento" style="margin-bottom:1.5rem;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div>
+          <h3 class="subtitulo" style="margin-bottom:4px;">TP 1 — Análisis de un proceso de trabajo concreto</h3>
+          <p style="font-size:13px;color:var(--texto-tenue);">Trabajo grupal · Presentación: 17 de abril de 2026 · Clase 4</p>
+        </div>
+        <span style="font-size:11px;padding:4px 12px;border-radius:20px;background:var(--verde-claro);color:var(--verde);font-weight:500;white-space:nowrap;">Aprobación directa: 100% TPs</span>
+      </div>
+    </div>
+
+    <div class="eyebrow">Pasos sugeridos para el TP 1</div>
+
+    <div class="paso">
+      <div class="paso-num">1</div>
+      <div class="paso-contenido">
+        <div class="paso-titulo">Selección del proceso productivo</div>
+        <p>Elegir un proceso de trabajo concreto para analizar: una planta industrial, un taller, un laboratorio, una empresa de servicios. Puede ser relevado en modalidad presencial o virtual (entrevistas remotas + documentación). Definir criterios de selección del caso y justificarlos.</p>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="paso-num">2</div>
+      <div class="paso-contenido">
+        <div class="paso-titulo">Relevamiento empírico de datos</div>
+        <p>Aplicar las herramientas metodológicas básicas: entrevista semiestructurada y/u observación (presencial o remota). Registrar: qué se produce, quién trabaja y en qué condiciones, qué tecnologías se usan, cómo se organiza la jornada, cuántas personas trabajan, qué convenio se aplica.</p>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="paso-num">3</div>
+      <div class="paso-contenido">
+        <div class="paso-titulo">Análisis con las categorías de la Unidad I</div>
+        <p>Aplicar los conceptos trabajados: identificar los tres elementos del proceso de trabajo, analizar las cuatro dimensiones (técnica, social, normativa, subjetiva), describir las relaciones de empleo a nivel micro y macro, identificar el marco regulatorio aplicable (LCT / CCT / estatuto).</p>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="paso-num">4</div>
+      <div class="paso-contenido">
+        <div class="paso-titulo">Elaboración del informe escrito grupal</div>
+        <p>Redactar el informe siguiendo las consignas específicas del profesor, disponibles en el Campus Virtual UTN. Usar vocabulario técnico de las Ciencias Sociales del Trabajo. Citar correctamente la bibliografía de la cátedra.</p>
+      </div>
+    </div>
+
+    <div class="paso">
+      <div class="paso-num">5</div>
+      <div class="paso-contenido">
+        <div class="paso-titulo">Exposición oral individual (clase 4)</div>
+        <p>Cada integrante del grupo presenta oralmente una parte del informe. Se evalúa: uso de vocabulario técnico, claridad argumentativa, capacidad de integrar teoría y datos empíricos, y dominio del tema más allá de lo escrito.</p>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="eyebrow">Lista de control — ¿El TP incorpora estos elementos?</div>
+    <div id="checklist">
+      <div class="checklist-item" onclick="toggle(this)">
+        <div class="chk-box">✓</div>
+        <div class="chk-texto">Identifiqué y describí los tres elementos del proceso de trabajo en el caso analizado</div>
+      </div>
+      <div class="checklist-item" onclick="toggle(this)">
+        <div class="chk-box">✓</div>
+        <div class="chk-texto">Analicé las cuatro dimensiones (técnica, social, normativa y subjetiva)</div>
+      </div>
+      <div class="checklist-item" onclick="toggle(this)">
+        <div class="chk-box">✓</div>
+        <div class="chk-texto">Describí las relaciones de empleo a nivel micro y/o macro</div>
+      </div>
+      <div class="checklist-item" onclick="toggle(this)">
+        <div class="chk-box">✓</div>
+        <div class="chk-texto">Identifiqué el marco normativo aplicable (LCT / CCT / Estatuto)</div>
+      </div>
+      <div class="checklist-item" onclick="toggle(this)">
+        <div class="chk-box">✓</div>
+        <div class="chk-texto">Usé vocabulario técnico propio de las Ciencias Sociales del Trabajo</div>
+      </div>
+      <div class="checklist-item" onclick="toggle(this)">
+        <div class="chk-box">✓</div>
+        <div class="chk-texto">Articulé datos empíricos con las categorías teóricas de la unidad</div>
+      </div>
+      <div class="checklist-item" onclick="toggle(this)">
+        <div class="chk-box">✓</div>
+        <div class="chk-texto">Cité correctamente la bibliografía de la cátedra</div>
+      </div>
+      <div class="checklist-item" onclick="toggle(this)">
+        <div class="chk-box">✓</div>
+        <div class="chk-texto">El informe tiene coherencia entre objetivo, metodología y análisis</div>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="eyebrow">Bibliografía de la Unidad I</div>
+
+    <p style="font-size:14px;color:var(--texto-suave);margin-bottom:1.25rem;">Los documentos de cátedra están disponibles en el Campus Virtual Global UTN. Se recomienda leer primero los Documentos de Cátedra (textos propios de la asignatura) y luego profundizar con los textos de Neffa y Recalde.</p>
+
+    <div class="bib-item">
+      <div class="bib-autor">Ceballos Acasuso, M. (2018) <span class="bib-badge badge-basica">Lectura básica</span></div>
+      <div class="bib-titulo">Análisis del trabajo como fenómeno multidimensional</div>
+      <div class="bib-datos">Documento de Cátedra N° 1 UTN · 14 pp. · 3ª Revisión · Campus Virtual UTN</div>
+    </div>
+
+    <div class="bib-item">
+      <div class="bib-autor">Ceballos Acasuso, M. (2017) <span class="bib-badge badge-basica">Lectura básica</span></div>
+      <div class="bib-titulo">Trabajo y cambio tecnológico</div>
+      <div class="bib-datos">Documento de Cátedra N° 2 UTN · 14 pp. · 3ª Revisión · Campus Virtual UTN</div>
+    </div>
+
+    <div class="bib-item">
+      <div class="bib-autor">Recalde, M. (2017) <span class="bib-badge badge-basica">Lectura básica</span></div>
+      <div class="bib-titulo">Manual de Derecho Colectivo de Trabajo</div>
+      <div class="bib-datos">Edunpaz · José C. Paz</div>
+    </div>
+
+    <div class="bib-item">
+      <div class="bib-autor">Neffa, J. (2016) <span class="bib-badge badge-basica">Lectura básica</span></div>
+      <div class="bib-titulo">Los riesgos psicosociales en el trabajo: contribuciones a su estudio</div>
+      <div class="bib-datos">UNM Editora · Moreno · (Capítulos introductorios especialmente relevantes para esta unidad)</div>
+    </div>
+
+    <div class="bib-item">
+      <div class="bib-autor">Montalvo Romero, J. (2020) <span class="bib-badge badge-comp">Complementaria</span></div>
+      <div class="bib-titulo">El Trabajo desde la Perspectiva de Género</div>
+      <div class="bib-datos">Revista de la Facultad de Derecho, (49), e106</div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="eyebrow">Recursos digitales</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3 class="subtitulo" style="margin-bottom:4px;">Revista Estudios del Trabajo</h3>
+        <p style="font-size:13px;color:var(--texto-tenue);">ASET — Asociación Argentina de Especialistas en Estudios del Trabajo</p>
+        <p style="font-size:13px;color:var(--azul-medio);margin-top:6px;">www.aset.org.ar/revista.php</p>
+      </div>
+      <div class="card">
+        <h3 class="subtitulo" style="margin-bottom:4px;">Asociación de Ergonomía Argentina</h3>
+        <p style="font-size:13px;color:var(--texto-tenue);">Recursos sobre ergonomía y condiciones de trabajo (relevante para Unidad III)</p>
+        <p style="font-size:13px;color:var(--azul-medio);margin-top:6px;">adeargentina.org.ar/ergonomia</p>
+      </div>
+    </div>
+
+    <div class="nota">
+      <strong>Nota sobre la evaluación.</strong> Para la aprobación directa se requiere asistencia al 75% de las clases, aprobar el 100% de los TPs grupales y todas las exposiciones orales. La aprobación no directa (regularidad) requiere aprobar 2 de los 3 TPs y 2 de las 3 exposiciones. En caso de desaprobar una instancia, existe un recuperatorio sustitutivo.
+    </div>
+
+  </div>
+</div>
+
+<!-- PIE -->
+<div class="pie">
+  <strong>EAPT 2026</strong> · UTN Facultad Regional Resistencia · Ingeniería Química · Prof. Lucas Oviedo
+</div>
+
+<script>
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const secciones = document.querySelectorAll('.seccion');
+  const total = navBtns.length;
+
+  function irA(i) {
+    navBtns.forEach((b, j) => b.classList.toggle('activo', i === j));
+    secciones.forEach((s, j) => s.classList.toggle('activa', i === j));
+    document.getElementById('barra').style.width = Math.round((i / (total - 1)) * 100) + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleElemento(el) {
+    el.classList.toggle('expandido');
+  }
+
+  const tabsReg = document.querySelectorAll('.tab-reg');
+  const panelsReg = document.querySelectorAll('.panel-reg');
+  function irRegTab(i) {
+    tabsReg.forEach((t, j) => t.classList.toggle('activo', i === j));
+    panelsReg.forEach((p, j) => p.classList.toggle('activo', i === j));
+  }
+
+  function toggle(el) {
+    el.classList.toggle('hecho');
+  }
+</script>
+
+</body>
+</html>
